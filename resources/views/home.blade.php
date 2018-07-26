@@ -16,23 +16,46 @@
                     <center>
                     <h3>Welcome to Mailbox</h3>
                     <div class="col-md-12">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                                <button type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#compose" style="border:0px solid transparent;">
+                                    <img src="img/compose.png" width="40%" height="20%">
+                                </button>
+                        </div>
+                         <div class="col-md-3">
                                 <button type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#inbox" style="border:0px solid transparent;">
                                     <img src="img/inbox.png" width="40%" height="20%">
                                 </button>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                                 <button type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#outbox" style="border:0px solid transparent;">
                                     <img src="img/outbox.png" width="40%" height="20%">
                                 </button>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                                 <button type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#tracker" style="border:0px solid transparent;">
                                          <img src="img/tracker.png" width="40%" height="20%">
                                 </button>
                         </div>
                     </div>
                     </center>
+                </div>
+                <!-- Modal For Compose -->
+                <div class="modal fade" id="compose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Compose</h4>
+                      </div>
+                      <div class="modal-body">
+                        ...
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- Modal For Inbox -->
                 <div class="modal fade" id="inbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
