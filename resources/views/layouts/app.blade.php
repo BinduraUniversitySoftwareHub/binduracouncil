@@ -72,7 +72,6 @@
         </nav>
 
         @yield('content')
-        @include('layouts.inbox')
     </div>
 
     <!-- Scripts -->
