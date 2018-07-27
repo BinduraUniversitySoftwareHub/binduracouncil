@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class DepartmentSecretary
+class Administrator
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,11 @@ class DepartmentSecretary
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == 'secretary') {
+           if (Auth::check() && Auth::user()->role == 'administrator') {
         return $next($request);
     }
          else  {
-        return redirect('/secretary');
+        return redirect('/');
     }
     }
 }
