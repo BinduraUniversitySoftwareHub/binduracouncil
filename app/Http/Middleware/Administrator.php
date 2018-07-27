@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Administrator
 {
@@ -19,7 +20,7 @@ class Administrator
         return $next($request);
     }
          else  {
-        return redirect('/');
+        return redirect('/login');
     }
     }
 }
