@@ -61,34 +61,14 @@
                     </ul>
                 </nav>
         <!--Create Department-->
-            
-        <div class="modal fade" id="dept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Create Department</h4>
-                      </div>
-                      <div class="modal-body">
-
-                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus placeholder="Department">
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click='department'>Add Department</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                </div>
-            </div>
+            <users></users>
+     
             <!-- End Create Department-->
 
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>

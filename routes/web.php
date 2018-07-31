@@ -31,4 +31,6 @@ Route::group(['middleware' => ['admin']], function () {
     return view('auth.register');
     });
 
+    Route::resource('department','DepartmentController');
+
 });
