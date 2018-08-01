@@ -8,7 +8,23 @@
                       </div>
                       <div class="modal-body">
 
-                        <input  type="department" class="form-control" v-model="department"required autofocus placeholder="Department">
+            <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Mail #</th>
+                      <th scope="col">To</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in list">
+                      <td>{{item.id}}</td>
+                      <td>{{item.department.name}}</td>
+                      <td>Pending</td>
+                     </tr>
+                    
+                  </tbody>
+            </table>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -21,3 +37,22 @@
                 </div>
      </div>
 </template>
+
+<script >
+    export default{
+      data(){
+        return{
+             list:{}
+
+           }
+        },
+      mounted(){
+
+        axios.get('outbox').then((response)=>{
+          this.list = response.data;
+        })
+     
+      }
+    }
+  
+</script>

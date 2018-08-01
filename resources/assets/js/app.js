@@ -20,8 +20,11 @@ Vue.component('inbox', require('./components/client/inbox.vue'));
 Vue.component('outbox', require('./components/client/outbox.vue'));
 Vue.component('compose', require('./components/client/compose.vue'));
 Vue.component('tracker', require('./components/client/tracker.vue'));
+Vue.component('dashboard', require('./components/client/dashboard.vue'));
 
 const app = new Vue({
     el: '#app'
+
+   
    
 });

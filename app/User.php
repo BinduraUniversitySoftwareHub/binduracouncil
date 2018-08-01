@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role','departmentId'
     ];
 
     /**
@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class,'departmentId');
+    }
+
+     public function mail()
+    {
+        return $this->hasMany(Mail::class,'userId');
+    }
 }

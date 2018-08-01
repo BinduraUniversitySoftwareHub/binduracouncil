@@ -18,6 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/mail','MailController');
+Route::get('/outbox','MailController@outbox');
+Route::get('/inbox','MailController@inbox');
+Route::get('/counter','MailController@counter');
+Route::get('/count','MailController@count');
 
 
 
@@ -30,6 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
      Route::get('/addUsers',function(){
     return view('auth.register');
     });
+
 
     Route::resource('department','DepartmentController');
 

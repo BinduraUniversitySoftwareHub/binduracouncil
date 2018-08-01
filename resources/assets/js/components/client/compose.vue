@@ -8,11 +8,15 @@
                       </div>
                       <div class="modal-body">
 
-                        <input  type="department" class="form-control" v-model="department"required autofocus placeholder="Department">
+                        <input  type="department" class="form-control" v-model="list.subject"required autofocus placeholder="Enter Mail Subject">&nbsp;
+                       <select class="form-control" v-model="list.deptId">
+                            <option  v-for="item in departments" :value="item.id">{{item.name}}</option>
+
+                      </select>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click='department'>Send  Mail</button>
+                        <button type="button" class="btn btn-primary" @click='compose'>Send  Mail</button>
                       </div>
                     </div>
                   </div>
@@ -21,3 +25,34 @@
                 </div>
      </div>
 </template>
+<script type="text/javascript">
+  export default{
+    data(){
+        return{
+          list:{
+            subject:'',
+            deptId:''
+          },
+            
+
+            departments:{}
+        }
+      
+    },
+    methods:{
+      compose(){
+      axios.post('mail',this.$data.list).then((response)=>{
+        this.list = response.data;
+        alert('added')
+      }).catch((error)=>{
+
+      })
+    }
+  },
+  mounted(){
+    axios.get('/department'). then((response)=>{
+      this.departments =response.data
+    })
+  }
+}
+</script>

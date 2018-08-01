@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail;
 use Illuminate\Http\Request;
+use Auth;
 
 class MailController extends Controller
 {
@@ -14,7 +15,7 @@ class MailController extends Controller
      */
     public function index()
     {
-        //
+      
     }
 
     /**
@@ -35,7 +36,13 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mail = new Mail;
+        $mail->subject = $request->subject;
+        $mail->userId = Auth::user()->id;
+        $mail->from =Auth::user()->departmentId;
+        $mail->to = $request->deptId;
+        $mail->save();
+
     }
 
     /**
@@ -82,4 +89,29 @@ class MailController extends Controller
     {
         //
     }
+
+    public function outbox(){
+
+        $outbox = Mail::with(['department'])->where('userId',Auth::id())->get();
+        return $outbox;
+    }
+     public function inbox(){
+
+        $inbox = Mail::with(['department'])->where('to',Auth::user()->departmentId)->get();
+        return $inbox;
+    }
+// count outgoing mails
+    public function counter(){
+
+        $counter = Mail::with(['department'])->where('userId',Auth::id())->count();
+        return $counter;
+    }
+    //count incoming mails
+      public function count(){
+
+        $counter =Mail::with(['department'])->where('to',Auth::user()->departmentId)->get()->count();
+        return $counter;
+    }
+
+
 }

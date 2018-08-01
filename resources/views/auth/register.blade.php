@@ -43,9 +43,10 @@
                             <label for="role" class="col-md-4 control-label">Department</label>
 
                             <div class="col-md-6">
-                                <select class="form-control">
-                                    <option name="departmentId" value=""></option>
-                                    <option name="departmentId" value="">Housing</option>
+                                <select class="form-control" name="departmentId" >
+                                    @foreach($dept as $d)
+                                    <option value="{{$d->id}}" id="departmentId">{{$d->name}}</option>
+                                    @endforeach
                                 </select>
 
                                 @if ($errors->has('department'))
@@ -59,9 +60,9 @@
                             <label for="role" class="col-md-4 control-label">role</label>
 
                             <div class="col-md-6">
-                                 <select class="form-control">
-                                    <option name="departmentId" value="">secretary</option>
-                                    <option name="departmentId" value="">head</option>
+                                 <select class="form-control" name="role">
+                                    <option  value="secretary">secretary</option>
+                                    <option  value="head">head</option>
                                 </select>
 
                                 @if ($errors->has('role'))
