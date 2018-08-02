@@ -12,15 +12,17 @@
                   <thead>
                     <tr>
                       <th scope="col">Mail #</th>
+                      <th scope="col">Subject</th>
                       <th scope="col">To</th>
-                      <th scope="col">Status</th>
+                    
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in list">
                       <td>{{item.id}}</td>
+                      <td>{{item.subject}}</td>
                       <td>{{item.department.name}}</td>
-                      <td>Pending</td>
+                      
                      </tr>
                     
                   </tbody>

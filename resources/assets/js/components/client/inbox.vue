@@ -1,10 +1,10 @@
 <template>
-   <div class="modal fade" id="outbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal fade" id="inbox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Outbox</h4>
+                        <h4 class="modal-title" id="myModalLabel">Inbox</h4>
                       </div>
                       <div class="modal-body">
 
@@ -12,15 +12,19 @@
                   <thead>
                     <tr>
                       <th scope="col">Mail #</th>
+                      <th scope="col">Subject</th>
                       <th scope="col">From</th>
-                      <th scope="col">Status</th>
+                     
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in list">
                       <td>{{item.id}}</td>
+                      <td>{{item.subject}}</td>
                       <td>{{item.department.name}}</td>
-                      <td>Pending</td>
+                     
+                      <td><button @click="confirmation(item.id)">Acknowledge</button></td>
                      </tr>
                     
                   </tbody>
@@ -46,10 +50,20 @@
 
            }
         },
+
+      methods:{
+        confirmation(id){
+          axios.patch('mail/'+id).then((response)=>{
+           this.list = response.data;
+            alert('confirmed')
+          });
+        }
+      },
       mounted(){
 
         axios.get('inbox').then((response)=>{
           this.list = response.data;
+         
         })
      
       }

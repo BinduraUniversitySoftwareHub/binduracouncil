@@ -1,5 +1,6 @@
 <template>
    <div class="modal fade" id="compose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -9,6 +10,7 @@
                       <div class="modal-body">
 
                         <input  type="department" class="form-control" v-model="list.subject"required autofocus placeholder="Enter Mail Subject">&nbsp;
+
                        <select class="form-control" v-model="list.deptId">
                             <option  v-for="item in departments" :value="item.id">{{item.name}}</option>
 
@@ -35,19 +37,23 @@
           },
             
 
-            departments:{}
+            departments:{},
+            errors:{},
         }
       
     },
     methods:{
       compose(){
+      
       axios.post('mail',this.$data.list).then((response)=>{
         this.list = response.data;
         alert('added')
       }).catch((error)=>{
-
+        this.errors = response.data;
       })
     }
+   
+
   },
   mounted(){
     axios.get('/department'). then((response)=>{

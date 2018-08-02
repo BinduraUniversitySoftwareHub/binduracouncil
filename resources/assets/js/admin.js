@@ -18,6 +18,6 @@ window.Vue = require('vue');
 Vue.component('users', require('./components/admin/create-users.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#admin'
     
 });

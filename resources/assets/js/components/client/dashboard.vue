@@ -24,6 +24,7 @@
                         <div class="col-md-3">
                                 <button type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#tracker" style="border:0px solid transparent;">
                                          <img src="img/tracker.png" width="40%" height="20%">
+                                         <span class="badge badge-success">{{del}}</span>
                                 </button>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
 		data(){
 			return{
                 outbox:'',
-				inbox:''
+                inbox:'',
+				del:''
 			}
 			
 		},
@@ -45,7 +47,12 @@
         }),
           axios.get('count').then((response)=>{
           this.inbox = response.data;
+        }),
+
+          axios.get('delivered').then((response)=>{
+          this.del = response.data;
         })
+        
         
 
     }

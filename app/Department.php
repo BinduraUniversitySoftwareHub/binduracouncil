@@ -14,4 +14,8 @@ class Department extends Model
     {
     	return $this->hasMany(Mail::class);
     }
+     public function mailer()
+    {
+    	return $this->hasMany(Mail::class);
+    }
 }

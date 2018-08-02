@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Mail;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,8 +23,10 @@ Route::get('/outbox','MailController@outbox');
 Route::get('/inbox','MailController@inbox');
 Route::get('/counter','MailController@counter');
 Route::get('/count','MailController@count');
+Route::get('/delivered','MailController@countDelivered');
+Route::get('/deli','MailController@delivered');
 
-
+Route::resource('department','DepartmentController');
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -37,6 +39,8 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
 
-    Route::resource('department','DepartmentController');
+    
 
 });
+
+   
