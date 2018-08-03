@@ -43881,6 +43881,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       axios.post('mail', this.$data.list).then(function (response) {
         _this.list = response.data;
+        _this.list = '';
         alert('added');
       }).catch(function (error) {
         _this.errors = response.data;

@@ -37,9 +37,12 @@ Route::group(['middleware' => ['admin']], function () {
      Route::get('/addUsers',function(){
     return view('auth.register');
     });
+});
+Route::group(['middleware' => ['registry']], function () {
 
-
-    
+ Route::get('/registry',function(){
+    return view('registry');
+    });
 
 });
 

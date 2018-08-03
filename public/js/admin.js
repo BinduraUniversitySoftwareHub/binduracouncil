@@ -43189,7 +43189,10 @@ window.Vue = __webpack_require__(34);
  */
 
 Vue.component('users', __webpack_require__(60));
+<<<<<<< HEAD
 Vue.component('users', __webpack_require__(73));
+=======
+>>>>>>> 56a9182792a125c26e3900dd6658798b92efa63b
 
 var app = new Vue({
   el: '#admin'
