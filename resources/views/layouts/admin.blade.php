@@ -45,7 +45,7 @@
                         
                         
                       
-                            <li><a href="/addUsers">Create Users</a></li>
+                            <li><a data-toggle="modal" data-target="#user" >Create User</a></li>
                             <li><a data-toggle="modal" data-target="#dept" >Create Department</a></li>
                             <li> <a href="{{ route('register') }}"
                                             onclick="event.preventDefault();
@@ -60,6 +60,8 @@
 
                     </ul>
                 </nav>
+             <!--Create Department-->
+                <user></user>
         <!--Create Department-->
             <users></users>
      

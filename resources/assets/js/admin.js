@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('users', require('./components/admin/create-users.vue'));
+Vue.component('users', require('./components/admin/register-user.vue'));
 
 const app = new Vue({
     el: '#admin'

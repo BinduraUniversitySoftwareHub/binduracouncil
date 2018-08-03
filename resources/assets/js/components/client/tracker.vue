@@ -15,6 +15,8 @@
                       <th scope="col">Subject</th>
                       <th scope="col">To</th>
                       <th scope="col">Status</th>
+                      <th scope="col">Send At</th>
+                      <th scope="col">Delivered At</th>
                     
                     </tr>
                   </thead>
@@ -23,7 +25,9 @@
                       <td>{{item.id}}</td>
                       <td>{{item.subject}}</td>
                       <td>{{item.department.name}}</td>
-                      <td>{{item.status}}</td>
+                      <td>{{item.status}}</td> 
+                      <td>{{item.created_at}}</td>
+                      <td>{{item.updated_at}}</td>
                       
                      </tr>
                     
