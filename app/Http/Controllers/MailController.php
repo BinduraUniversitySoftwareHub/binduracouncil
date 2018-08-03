@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 
+
 class MailController extends Controller
 {
     /**
@@ -38,16 +39,22 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
+         //$ref = rand(100,999);
         DB::transaction(function(){
             global $request;
+            global $ref;
+           
+
             $this->validate($request, [
             'subject' => 'required|max:255',
             'deptId' => 'required',
              ]);
             $mail = new Mail;
             $mail->subject = $request->subject;
+            $mail->agent = $request->agent;
             $mail->userId = Auth::user()->id;
             $mail->from =Auth::user()->departmentId;
+            $mail->reference =str_random(7);
             $mail->to = $request->deptId;
             $mail->save();
             

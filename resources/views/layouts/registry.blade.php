@@ -44,9 +44,11 @@
                         <!-- Authentication Links -->
                         
                         
-                      
-                            <li><a data-toggle="modal" data-target="#">Create Messenger List</a></li>
+                        
+                            <li><a data-toggle="modal" data-target="#messenger">Create Messenger List</a></li>
+                            @if(Auth::user()->role==='admin')
                             <li><a data-toggle="modal" data-target="#dept" >Create Department</a></li>
+                            @endif
                             <li> <a href="{{ route('register') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -61,7 +63,7 @@
                     </ul>
                 </nav>
         <!--Create Department-->
-            <registry></registry>
+            <messenger></messenger>
      
             <!-- End Create Department-->
 

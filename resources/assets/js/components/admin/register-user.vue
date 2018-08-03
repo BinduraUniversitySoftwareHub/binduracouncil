@@ -16,25 +16,24 @@
                       </div> 
                       <div class="modal-body">
                             <label for="role" class="col-md-4 control-label">Department</label>
-                           <select class="form-control" name="departmentId" required autofocus placeholder="Department">
-                              <option value="" id="departmentId"></option>
-                           </select>
+                             <select class="form-control" v-model="list.deptId">
+                            <option  v-for="item in departments" :value="item.id">{{item.name}}</option>
+
+                      </select>
                       </div>
                        <div class="modal-body">
                         <label for="role" class="col-md-4 control-label">Role</label>
-                         <select class="form-control" name="role">
+                         <select class="form-control" v-model="list.role">
+                                 <option  value="messenger">messenger</option>
                                  <option  value="secretary">secretary</option>
-                                 <option  value="head">head</option>
+                                
                           </select>
                       </div>
                       <div class="modal-body">
                          <label for="password" class="col-md-4 control-label">Password</label>
-                          <input id="password" type="password" class="form-control" name="password" required>
+                          <input id="password" type="password" class="form-control" v-model="list.password" required>
                       </div> 
-                      <div class="modal-body">
-                          <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                           <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                      </div>
+                      
 
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -54,21 +53,31 @@ export default{
   data(){
     return{
       list:{
-      department:''
+      deptId:'',
+      name:'',
+      email:'',
+      role:'',
+      password:''
     },
-    errors:{}
+    errors:{},
+    departments:{},
     }
   },
   methods:{
       create(){
-        axios.post('/department',this.$data.list).then((response)=>{
+        axios.post('/user',this.$data.list).then((response)=>{
         this.list.department= response.data;
-        alert("department added")
+        alert("user created")
       }).catch((error)=>{
         this.errors=response.data
         alert()
       })
       }
+  },
+    mounted(){
+    axios.get('/department'). then((response)=>{
+      this.departments =response.data
+    })
   }
 }
 

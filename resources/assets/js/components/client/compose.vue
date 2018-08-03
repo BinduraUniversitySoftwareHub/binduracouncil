@@ -10,11 +10,16 @@
                       <div class="modal-body">
 
                         <input  type="department" class="form-control" v-model="list.subject"required autofocus placeholder="Enter Mail Subject">&nbsp;
-
+                      <label for="role" class="col-md-4 control-label">Department</label>
                        <select class="form-control" v-model="list.deptId">
                             <option  v-for="item in departments" :value="item.id">{{item.name}}</option>
 
-                      </select>
+                      </select>&nbsp;
+                      <label for="role" class="col-md-4 control-label">Agent</label>
+                       <select class="form-control" v-model="list.agent">
+                            <option  v-for="item in agents" :value="item.id">{{item.name}}</option>
+
+                      </select>&nbsp;
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -33,11 +38,13 @@
         return{
           list:{
             subject:'',
-            deptId:''
+            deptId:'',
+            agent:''
           },
             
 
             departments:{},
+            agents:{},
             errors:{},
         }
       
@@ -59,6 +66,10 @@
   mounted(){
     axios.get('/department'). then((response)=>{
       this.departments =response.data
+    }),
+  
+      axios.get('/agents'). then((response)=>{
+      this.agents =response.data
     })
   }
 }

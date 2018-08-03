@@ -11,6 +11,7 @@
 |
 */
 use App\Mail;
+use Carbon\Carbon;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,6 +28,7 @@ Route::get('/delivered','MailController@countDelivered');
 Route::get('/deli','MailController@delivered');
 
 Route::resource('department','DepartmentController');
+Route::get('/agents','UserController@agents');
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -37,13 +39,21 @@ Route::group(['middleware' => ['admin']], function () {
      Route::get('/addUsers',function(){
     return view('auth.register');
     });
+      Route::post('/user','UserController@create');
+    
+
+
 });
 Route::group(['middleware' => ['registry']], function () {
 
  Route::get('/registry',function(){
     return view('registry');
     });
+ Route::post('/messenger','UserController@create');
+ //Route::get('/agent','UserController@agents');
 
 });
 
+    Route::get('/rand',function(){
    
+    });

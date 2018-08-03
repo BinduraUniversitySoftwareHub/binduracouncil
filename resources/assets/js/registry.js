@@ -15,7 +15,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('messenger', require('./components/admin/create-messenger.vue'));
+Vue.component('messenger', require('./components/registry/create-messenger.vue'));
 
 const app = new Vue({
     el: '#admin'

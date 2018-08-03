@@ -15,8 +15,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('users', require('./components/admin/create-users.vue'));
-Vue.component('users', require('./components/admin/register-user.vue'));
+Vue.component('user', require('./components/admin/create-users.vue'));
+Vue.component('dept', require('./components/admin/register-user.vue'));
 
 const app = new Vue({
     el: '#admin'

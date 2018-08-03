@@ -402,6 +402,106 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(19);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(6);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(6);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -508,106 +608,6 @@ module.exports = function normalizeComponent (
   }
 }
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(19);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(6);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 4 */
@@ -31036,7 +31036,7 @@ module.exports = __webpack_require__(16);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
 var Axios = __webpack_require__(18);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 
 /**
  * Create an instance of Axios
@@ -31119,7 +31119,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(27);
 var dispatchRequest = __webpack_require__(28);
@@ -31660,7 +31660,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(29);
 var isCancel = __webpack_require__(8);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var isAbsoluteURL = __webpack_require__(30);
 var combineURLs = __webpack_require__(31);
 
@@ -43188,11 +43188,8 @@ window.Vue = __webpack_require__(34);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('users', __webpack_require__(60));
-<<<<<<< HEAD
-Vue.component('users', __webpack_require__(73));
-=======
->>>>>>> 56a9182792a125c26e3900dd6658798b92efa63b
+Vue.component('user', __webpack_require__(60));
+Vue.component('dept', __webpack_require__(63));
 
 var app = new Vue({
   el: '#admin'
@@ -43204,7 +43201,7 @@ var app = new Vue({
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(61)
 /* template */
@@ -43415,25 +43412,15 @@ if (false) {
 }
 
 /***/ }),
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(74)
+var __vue_script__ = __webpack_require__(64)
 /* template */
-var __vue_template__ = __webpack_require__(75)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43472,12 +43459,11 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 74 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -43532,9 +43518,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       list: {
-        department: ''
+        deptId: '',
+        name: '',
+        email: '',
+        role: '',
+        password: ''
       },
-      errors: {}
+      errors: {},
+      departments: {}
     };
   },
 
@@ -43542,19 +43533,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     create: function create() {
       var _this = this;
 
-      axios.post('/department', this.$data.list).then(function (response) {
+      axios.post('/user', this.$data.list).then(function (response) {
         _this.list.department = response.data;
-        alert("department added");
+        alert("user created");
       }).catch(function (error) {
         _this.errors = response.data;
         alert();
       });
     }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('/department').then(function (response) {
+      _this2.departments = response.data;
+    });
   }
 });
 
 /***/ }),
-/* 75 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43647,13 +43645,132 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _c("div", { staticClass: "modal-body" }, [
+            _c(
+              "label",
+              { staticClass: "col-md-4 control-label", attrs: { for: "role" } },
+              [_vm._v("Department")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.list.deptId,
+                    expression: "list.deptId"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.list,
+                      "deptId",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.departments, function(item) {
+                return _c("option", { domProps: { value: item.id } }, [
+                  _vm._v(_vm._s(item.name))
+                ])
+              })
+            )
+          ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "modal-body" }, [
+            _c(
+              "label",
+              { staticClass: "col-md-4 control-label", attrs: { for: "role" } },
+              [_vm._v("Role")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.list.role,
+                    expression: "list.role"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.list,
+                      "role",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "messenger" } }, [
+                  _vm._v("messenger")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "secretary" } }, [
+                  _vm._v("secretary")
+                ])
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4),
+          _c("div", { staticClass: "modal-body" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-md-4 control-label",
+                attrs: { for: "password" }
+              },
+              [_vm._v("Password")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.list.password,
+                  expression: "list.password"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "password", type: "password", required: "" },
+              domProps: { value: _vm.list.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.list, "password", $event.target.value)
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer" }, [
             _c(
@@ -43702,97 +43819,6 @@ var staticRenderFns = [
       _c("h4", { staticClass: "modal-title", attrs: { id: "myModalLabel" } }, [
         _vm._v("Create User")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-4 control-label", attrs: { for: "role" } },
-        [_vm._v("Department")]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: {
-            name: "departmentId",
-            required: "",
-            autofocus: "",
-            placeholder: "Department"
-          }
-        },
-        [_c("option", { attrs: { value: "", id: "departmentId" } })]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-4 control-label", attrs: { for: "role" } },
-        [_vm._v("Role")]
-      ),
-      _vm._v(" "),
-      _c("select", { staticClass: "form-control", attrs: { name: "role" } }, [
-        _c("option", { attrs: { value: "secretary" } }, [_vm._v("secretary")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "head" } }, [_vm._v("head")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-4 control-label", attrs: { for: "password" } },
-        [_vm._v("Password")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "password",
-          type: "password",
-          name: "password",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-4 control-label",
-          attrs: { for: "password-confirm" }
-        },
-        [_vm._v("Confirm Password")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "password-confirm",
-          type: "password",
-          name: "password_confirmation",
-          required: ""
-        }
-      })
     ])
   }
 ]
