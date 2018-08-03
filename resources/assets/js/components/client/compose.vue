@@ -47,6 +47,7 @@
       
       axios.post('mail',this.$data.list).then((response)=>{
         this.list = response.data;
+        this.list=''
         alert('added')
       }).catch((error)=>{
         this.errors = response.data;

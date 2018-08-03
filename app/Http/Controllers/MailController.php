@@ -119,8 +119,8 @@ class MailController extends Controller
 
     public function outbox(){
 
-        $outbox = Mail::with(['department'])->where('userId',Auth::id())->pluck('to');
-        $o = Mail::with(['department'])->where('userId',Auth::id())->where('to',$outbox)->get();
+        $outbox = Mail::with(['department'])->where('userId',Auth::id())->pluck('from');
+        $o = Mail::with(['department'])->where('userId',Auth::id())->where('from',$outbox)->get();
 
         return $o;
     }
